@@ -839,10 +839,21 @@ if module_mode == "现状透视":
                 max_value=end_year,
                 value=start_year
             )
-            selected_metric = st.selectbox(
+            metric_options = {
+                "全部企业": "全部企业",
+                "企业密度": "企业密度",
+                "新增": "新增",
+                "消亡": "注销",  # 显示“消亡”，实际用“注销”
+                "净增加": "净增加"
+            }
+            
+            selected_display = st.selectbox(
                 "选择指标",
-                ["全部企业", "企业密度", "新增", "注销", "净增加"]
+                options=list(metric_options.keys())
             )
+            
+            # 获取实际列名
+            selected_metric = metric_options[selected_display]
 
         # 加载数据
         cities, values = load_data(selected_year, selected_metric)
