@@ -243,7 +243,7 @@ def load_historical_data(year):
 # 侧边导航栏
 # =====================
 with st.sidebar:
-    st.image("AI.png", width=268)
+    # st.image("AI.png", width=268)
     st.markdown('<div style="font-size:24px;color:#2B5F91;">AI Enterprise Analytics</div>',
                 unsafe_allow_html=True)
     st.markdown("---")
