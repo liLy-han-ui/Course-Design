@@ -692,7 +692,7 @@ if module_mode == "现状透视":
         # 修改指标映射（主要修改点2）
         METRIC_OPTIONS = {
             "新增企业": {"col": "new", "title": "新增"},
-            "消亡企业": {"col": "death", "title": "死亡"},
+            "消亡企业": {"col": "death", "title": "消亡"},
             "净增长": {"col": "net_growth", "title": "净增长"},
             "总量": {"col": "cumulative", "title": "总量"}
         }
@@ -860,7 +860,7 @@ if module_mode == "现状透视":
         if not cities or not values:
             st.error("无法加载指定年份和指标的数据，请检查输入参数或数据文件。")
         else:
-            title = f"{selected_metric}_{selected_year}"
+            title = f"{selected_display}_{selected_year}"
 
             # 获取对应指标的颜色分段规则
             pieces = get_color_pieces(selected_metric)
