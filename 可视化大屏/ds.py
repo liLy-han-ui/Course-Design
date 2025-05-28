@@ -243,7 +243,15 @@ def load_historical_data(year):
 # 侧边导航栏
 # =====================
 with st.sidebar:
-    # st.image("AI.png", width=268)
+    # 获取当前脚本所在目录
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # 构建目标文件的绝对路径
+    image_path = os.path.join(current_dir, "AI.png")
+    
+    # 读取并显示图片
+    st.image(image_path, width=268)
+
     st.markdown('<div style="font-size:24px;color:#2B5F91;">AI Enterprise Analytics</div>',
                 unsafe_allow_html=True)
     st.markdown("---")
