@@ -3,5 +3,3 @@ streamlit
 pandas
 matplotlib
 pyecharts
-tempfile
-os
