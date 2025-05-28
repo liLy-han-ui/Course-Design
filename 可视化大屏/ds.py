@@ -92,7 +92,7 @@ def load_data(year, metric):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     try:
         if metric == "全部企业":
-            构建目标文件的绝对路径
+        
             file_path = os.path.join(current_dir, "..", "城市企业统计", "全部企业", f"全部企业_{year}.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data['全部企业'].fillna(0).tolist()
