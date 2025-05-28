@@ -60,12 +60,19 @@ time_span=1
 # =====================
 @st.cache_data(ttl=3600)
 def load_all_data():
-    trend_df = pd.read_csv("../其余信息统计结果/processed_data.csv")
-    scale_df = pd.read_csv("../其余信息统计结果/scale_data.csv")
-    invest_df = pd.read_csv("../其余信息统计结果/investment_data.csv")
-    heatmap_df = pd.read_csv("../其余信息统计结果/industry_heatmap_data.csv")
-    survival_df = pd.read_csv("../其余信息统计结果/survival_cycle_data.csv")
-    capital_df = pd.read_csv("../其余信息统计结果/capital_sum_data.csv")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path1 = os.path.join(current_dir, "..", "其余信息统计结果", "processed_data.csv")
+    data_path2 = os.path.join(current_dir, "..", "其余信息统计结果", "scale_data.csv")
+    data_path3 = os.path.join(current_dir, "..", "其余信息统计结果", "investment_data.csv")
+    data_path4 = os.path.join(current_dir, "..", "其余信息统计结果", "industry_heatmap_data.csv")
+    data_path5 = os.path.join(current_dir, "..", "其余信息统计结果", "survival_cycle_data.csv")
+    data_path6 = os.path.join(current_dir, "..", "其余信息统计结果", "capital_sum_data.csv")
+    trend_df = pd.read_csv(data_path1)
+    scale_df = pd.read_csv(data_path2)
+    invest_df = pd.read_csv(data_path3)
+    heatmap_df = pd.read_csv(data_path4)
+    survival_df = pd.read_csv(data_path5)
+    capital_df = pd.read_csv(data_path6)
 
     for df in [trend_df, scale_df, invest_df, heatmap_df, survival_df, capital_df]:
         if 'year' in df.columns:
@@ -82,17 +89,19 @@ latest_data = trend_df[trend_df['year'] == latest_year].iloc[0]
 # =====================
 def load_data(year, metric):
     """根据年份和指标加载数据"""
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     try:
         if metric == "全部企业":
-            file_path = f"../城市企业统计/全部企业/全部企业_{year}.csv"
+            构建目标文件的绝对路径
+            file_path = os.path.join(current_dir, "..", "城市企业统计", "全部企业", f"全部企业_{year}.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data['全部企业'].fillna(0).tolist()
         elif metric == "企业密度":
-            file_path = f"../城市企业密度/{year}_density.csv"
+            file_path = os.path.join(current_dir, "..", "城市企业密度", f"{year}_density.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data['企业密度'].fillna(0).tolist()
         elif metric in ["新增", "注销", "净增加"]:
-            file_path = f"../城市企业统计/净增加/净增加企业_{year}.csv"
+            file_path = os.path.join(current_dir, "..", "城市企业统计", "净增加", f"净增加企业_{year}.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data[metric].fillna(0).tolist()
     except FileNotFoundError:
@@ -105,11 +114,14 @@ def load_data(year, metric):
 # 加载数据函数
 @st.cache_data
 def load_data1():
-    # 读取 Excel 数据
-    short_long = pd.read_excel("../领域风险预警/结果/风险评分结果_优化版.xlsx", sheet_name="短期vs长期对比", header=0)
-    short = pd.read_excel("../领域风险预警/结果/风险评分结果_优化版.xlsx", sheet_name="短期风险评分", header=0)
-    long = pd.read_excel("../领域风险预警/结果/风险评分结果_优化版.xlsx", sheet_name="长期风险评分", header=0)
-
+    # 获取当前脚本所在目录
+    current_dir = os.path.dirname(os.path.abspath(__file__)) 
+    # 构建目标文件的绝对路径
+    excel_file_path = os.path.join(current_dir, "..", "领域风险预警", "结果", "风险评分结果_优化版.xlsx")
+    # 使用绝对路径读取Excel文件的不同Sheet
+    short_long = pd.read_excel(excel_file_path, sheet_name="短期vs长期对比", header=0)
+    short = pd.read_excel(excel_file_path, sheet_name="短期风险评分", header=0)
+    long = pd.read_excel(excel_file_path, sheet_name="长期风险评分", header=0)
     # 清理列名中的换行符和空格
     short_long.columns = short_long.columns.str.replace(r'\s+', '', regex=True)
     short.columns = short.columns.str.replace(r'\s+', '', regex=True)
@@ -886,8 +898,14 @@ elif module_mode == "前瞻洞察":
         st.markdown('<div class="big-title">地区企业数量预测趋势分析</div>', unsafe_allow_html=True)
         st.markdown('展示2000年至2030年各城市企业数量的历史与预测变化趋势')
 
-        # 1. 加载预测数据
-        forecast_df = pd.read_csv("../城市企业数量预测/预测结果/combined_city_data_2000_2030.csv")
+        # 获取当前脚本所在目录
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # 构建目标文件的绝对路径
+        file_path = os.path.join(current_dir, "..", "城市企业数量预测", "预测结果", "combined_city_data_2000_2030.csv")
+        
+        # 读取数据
+        forecast_df = pd.read_csv(file_path)
 
         # 2. 构建城市-省份映射（示例）
         city_to_province = {
@@ -1278,7 +1296,15 @@ elif module_mode == "前瞻洞察":
 
     elif forecast_mode=="技术领域预测":
         st.markdown('<div class="big-title">行业技术前景展望</div>', unsafe_allow_html=True)
-        forecast_df =pd.read_csv("../经营范围预测/预测结果/企业技术领域发展数据_2000_2030.csv")
+ 
+        # 获取当前脚本所在目录
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # 构建目标文件的绝对路径
+        file_path = os.path.join(current_dir, "..", "经营范围预测", "预测结果", "企业技术领域发展数据_2000_2030.csv")
+        
+        # 读取数据
+        forecast_df = pd.read_csv(file_path)
         # 用户选择面板 - 图表类型选择
         chart_type = st.selectbox("选择图表类型", options=["热力图", "折线图"], key="chart_type_select")
 
@@ -1421,7 +1447,12 @@ else:
     if risk_avert_mode == "企业流失风险城市分析":
         st.markdown('<div class="big-title">企业流失风险城市全景分析</div>', unsafe_allow_html=True)
 
-        df_risk = pd.read_csv("../地区风险预警/预测结果/城市风险评级结果.csv")
+        # 获取当前脚本所在目录
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # 构建目标文件的绝对路径
+        file_path = os.path.join(current_dir, "..", "地区风险预警", "预测结果", "城市风险评级结果.csv")
+        # 读取数据
+        df_risk = pd.read_csv(file_path)
 
         with st.expander("图表控制面板（点击隐藏）", expanded=True):
             selected_metric = st.selectbox(
