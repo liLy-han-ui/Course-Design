@@ -2,3 +2,7 @@ plotly
 streamlit
 pandas
 matplotlib
+pyecharts
+collections
+tempfile
+os
