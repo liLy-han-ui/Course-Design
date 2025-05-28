@@ -100,7 +100,7 @@ def load_data(year, metric):
             file_path = os.path.join(current_dir, "..", "城市企业密度", f"{year}_density.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data['企业密度'].fillna(0).tolist()
-        elif metric in ["新增", "消亡", "净增加"]:
+        elif metric in ["新增", "注销", "净增加"]:
             file_path = os.path.join(current_dir, "..", "城市企业统计", "净增加", f"净增加企业_{year}.csv")
             data = pd.read_csv(file_path)
             return data['城市'].tolist(), data[metric].fillna(0).tolist()
@@ -582,7 +582,6 @@ if module_mode == "现状透视":
         # 数据加载
         @st.cache_data(ttl=3600)
         def load_business_scope_data():
-            business_scope_df = pd.read_csv('../企业经营范围/企业统计结果.csv')  
                         # 获取当前脚本所在目录
             current_dir = os.path.dirname(os.path.abspath(__file__))
             
@@ -842,7 +841,7 @@ if module_mode == "现状透视":
             )
             selected_metric = st.selectbox(
                 "选择指标",
-                ["全部企业", "企业密度", "新增", "消亡", "净增加"]
+                ["全部企业", "企业密度", "新增", "注销", "净增加"]
             )
 
         # 加载数据
