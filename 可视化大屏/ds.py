@@ -53,7 +53,7 @@ st.markdown("""
 
 global start_year,end_year,time_span
 start_year=2000
-end_year=2025
+end_year=2024
 time_span=1
 # =====================
 # 数据加载与预处理
