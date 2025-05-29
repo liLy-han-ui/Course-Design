@@ -264,21 +264,21 @@ with st.sidebar:
     if module_mode == "现状透视":
         analysis_mode = st.radio("现状透视",
                                  ["总体趋势洞察",
+                                  "地区分布分析",
+                                  "行业热力图分析",
+                                  "互联网技术领域分析",
                                   "企业规模分析",
                                   "投资类型分析",
-                                  "行业热力图分析",
                                   "生存周期分析",
-                                  "注册资本分析",
-                                  "互联网技术领域分析",
-                                  "地区分布分析"],
+                                  "注册资本分析"],
                                  captions=["企业数量变化分析",
+                                           "企业分布时空分析",
+                                           "行业热度全景分析",
+                                           "年存活企业互联网技术领域分布分析",
                                            "企业规模分布分析",
                                            "投资主体构成分析",
-                                           "行业热度全景分析",
                                            "生存周期分布分析",
-                                           "年新增企业注册资本规模分析",
-                                           "年存活企业互联网技术领域分布分析",
-                                           "企业分布时空分析"]
+                                           "年新增企业注册资本规模分析"]
                                  )
     elif module_mode == "前瞻洞察":
         forecast_mode = st.radio("前瞻洞察",
@@ -587,7 +587,10 @@ if module_mode == "现状透视":
             
             # 构建目标文件的绝对路径
             file_path = os.path.join(current_dir, "..", "企业经营范围", "企业统计结果.csv")
+        
             business_scope_df = pd.read_csv(file_path) # 确保 'data.csv' 文件路径正确
+            business_scope_df = business_scope_df[(business_scope_df['年份'] >= 2000) & (business_scope_df['年份'] <= 2024)]
+
             return business_scope_df
 
         business_scope_df = load_business_scope_data()
