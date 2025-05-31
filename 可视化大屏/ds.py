@@ -175,7 +175,7 @@ def get_color_pieces(metric):
             {"min": 201, "max": 400, "color": "#c2e699"},
             {"min": 0, "max": 200, "color": "#e5f5e0"}
         ],
-        "消亡": [
+        "注销": [
             {"min": 2000, "color": "#8B0000"},
             {"min": 1601, "max": 1999, "color": "#a01414"},
             {"min": 1401, "max": 1600, "color": "#b22222"},
